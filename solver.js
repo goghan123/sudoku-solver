@@ -1,4 +1,3 @@
-import { createHTMLBoard } from "./board.js";
 
 const result = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const series = [8, 0, 0, 2, 0, 9, 0, 0, 0];
@@ -45,4 +44,3 @@ const content = document.createTextNode(fillSeries());
 smallScreen.appendChild(content);
 document.body.append(smallScreen);
 */
-createHTMLBoard();
