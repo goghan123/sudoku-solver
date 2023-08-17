@@ -20,7 +20,7 @@ const obtainValuesRemaining = () => {
     for (let i = 1; i <= 9; i++) {
         series.includes(i) && (
             resultCopy.splice(i - e - 1, 1),
-            e = e + 1
+            e++
         )
     }
     return resultCopy;

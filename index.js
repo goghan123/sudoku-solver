@@ -1,5 +1,10 @@
-import { createBoardContent, createHTMLBoard } from "./board.js";
+import {
+    createBoardSolution, createHTMLBoard, vacuumsGenerator,
+    messagesWindow
+} from "./board.js";
 
-
+messagesWindow();
 createHTMLBoard();
-createBoardContent();
+// createBoardSolution();
+// vacuumsGenerator();
+// inputGenerator();
