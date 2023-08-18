@@ -1,5 +1,5 @@
 import { Cell } from "./cell.js";
-import { fillSeries, fillSeriesInBoard, obtainVacuumsIndex, obtainValuesRemaining } from "./solver.js";
+import { columnSweep, fillSeriesInBoard, getColumnValues, getRowValues, obtainVacuumsIndex, obtainValuesRemaining, rowSweep} from "./solver.js";
 
 /*
 export const bodyFeatures = () => {
@@ -40,42 +40,45 @@ export const createHTMLBoard = () => {
 }
 
 export const messagesWindow = () => {
+   
 
-    // const row2HTML = () => document.getElementsByClassName('row-2')[0].getElementsByTagName('input')[0].value;
-    // const col2HTML = document.getElementsByClassName('col-0');
-
-    const getRowValues = (rowNumber) => {
-        let lineValues = [];
-        for (let i = 0; i <= 8; i++) {
-            const newValue = document.getElementsByClassName(`row-${rowNumber}`)[0].getElementsByTagName('input')[i].value;
-            lineValues.push(newValue);
-        }
-        return lineValues;
-    }
-
-    const getColumnValues = (colNumber) => {
-        let lineValues = [];
-        for (let i = 0; i <= 8; i++) {
-            const newValue = document.getElementsByClassName(`col-${colNumber}`)[i].lastChild.value;
-            lineValues.push(newValue);
-        }
-        return lineValues;
-    }
     const buttonContainer = document.createElement('div');
     buttonContainer.setAttribute('id', 'x-container');
     buttonContainer.style.width = '100vw';
     const newButton = document.createElement('button');
-    newButton.innerHTML = 'Completar fila 2';
+    newButton.innerHTML = 'Completar columna 3 y fila 3';
     const messagesInput = document.createElement('div');
     messagesInput.innerText = '';
 
     newButton.onclick = () => {
         const rowSeries = getRowValues(2);
         const columnSeries = getColumnValues(2);
+        /*
         messagesInput.innerText = `Serie de vacíos de fila: ${obtainVacuumsIndex(columnSeries)}\n
         Serie de valores faltantes: ${obtainValuesRemaining(columnSeries)}\n
         Serie completa: ${fillSeries(columnSeries)}`;
-        fillSeriesInBoard(columnSeries, 2);
+        */
+        fillSeriesInBoard('column', columnSeries, 2);
+        fillSeriesInBoard('row', rowSeries, 2);
+        messagesInput.innerText = '';
+
+        /*
+                const algunElemento1 = document.getElementsByClassName(`col-${5}`)[0].lastChild;
+                const algunElemento2 = document.getElementsByClassName(`col-${5}`)[3].lastChild;
+                const algunElemento3 = document.getElementsByClassName(`col-${7}`)[7].lastChild;
+        
+                algunElemento1.setAttribute('class', 'suggest');
+                algunElemento2.setAttribute('class', 'suggest');
+                algunElemento3.setAttribute('class', 'suggest');
+        
+                const inputDePrueba = document.getElementsByClassName('suggest')[0];
+        */
+
+        // messagesInput.innerText = suggestResults(getColumnValues(5));
+
+        for (let i = 0; i < 9; i++) columnSweep(i);
+        //for (let i = 0; i < 9; i++) 
+        rowSweep();
 
     }
 
