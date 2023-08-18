@@ -1,10 +1,12 @@
 import { Cell } from "./cell.js";
-// import { obtainVacuumsIndex } from "./solver.js";
+import { fillSeries, fillSeriesInBoard, obtainVacuumsIndex, obtainValuesRemaining } from "./solver.js";
 
+/*
 export const bodyFeatures = () => {
     document.body.style('display', 'flex');
     document.body.style('flex-direction', 'column');
 }
+*/
 
 let cellId = 0;
 const addObject = (i, e, cellContainer) => {
@@ -37,55 +39,10 @@ export const createHTMLBoard = () => {
     document.body.appendChild(board);
 }
 
-const rowGenerator = () => {
-    let result = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let newSeries = [];
-    for (let i = 0; i < 9; i++) {
-        newSeries.push(
-            result.splice(Math.floor(Math.random() * result.length), 1)
-        );
-    }
-    return newSeries;
-}
-/*
-export const inputGenerator = () => {
-    const cells = document.querySelectorAll('*[id^="cell-"]');
-    const getColumn = (value) => {
-        return
-        value <= 9 ? 
-    }
-    for (let i = 1; i <= 81; i++) {
-        const newCol = new Cell;
-        newCell.column = getColumn(i);
-        newCell.createCell(cells, i);
-    }
-}
-*/
-
-export const vacuumsGenerator = () => {
-    const cells = document.querySelectorAll('*[id^="cell-"]');
-    for (let i = 0; i < 65; i++) {
-        const randomCell = cells[Math.floor(Math.random() * cells.length)];
-        randomCell.innerHTML = '';
-    }
-}
-
-export const createBoardSolution = () => {
-    const cells = document.querySelectorAll('*[id^="cell-"]');
-    let a = 0;
-    for (let e = 0; e < 9; e++) {
-        const rowContent = rowGenerator();
-        for (let i = 0; i < 9; i++) {
-            cells[a].innerHTML = rowContent[i];
-            a++;
-        }
-    }
-}
-
 export const messagesWindow = () => {
 
-    const row2HTML = () => document.getElementsByClassName('row-2')[0].getElementsByTagName('input')[0].value;
-    const col2HTML = document.getElementsByClassName('col-0');
+    // const row2HTML = () => document.getElementsByClassName('row-2')[0].getElementsByTagName('input')[0].value;
+    // const col2HTML = document.getElementsByClassName('col-0');
 
     const getRowValues = (rowNumber) => {
         let lineValues = [];
@@ -108,16 +65,17 @@ export const messagesWindow = () => {
     buttonContainer.setAttribute('id', 'x-container');
     buttonContainer.style.width = '100vw';
     const newButton = document.createElement('button');
-    newButton.innerHTML = 'Algo Fígaro';
+    newButton.innerHTML = 'Completar fila 2';
     const messagesInput = document.createElement('div');
     messagesInput.innerText = '';
 
     newButton.onclick = () => {
-        // Esto funciona: 
-        // messagesInput.innerText = getLineValues(col2HTML);
-        // Esto también funciona: 
-        // messagesInput.innerText = document.getElementsByClassName('col-0')[0].lastChild.value;
-        messagesInput.innerText = `Filas: ${getRowValues(2)}. Columnas: ${getColumnValues(2)}`;
+        const rowSeries = getRowValues(2);
+        const columnSeries = getColumnValues(2);
+        messagesInput.innerText = `Serie de vacíos de fila: ${obtainVacuumsIndex(columnSeries)}\n
+        Serie de valores faltantes: ${obtainValuesRemaining(columnSeries)}\n
+        Serie completa: ${fillSeries(columnSeries)}`;
+        fillSeriesInBoard(columnSeries, 2);
 
     }
 
