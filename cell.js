@@ -16,6 +16,9 @@ export class Cell {
         newInput.style.height = '70px';
         newInput.style.textAlign = 'center';
         newInput.style.fontSize = '40px';
+
+
+
         newInput.value = '';
 
         // Esto sirve para navegar por los valores de la tabla

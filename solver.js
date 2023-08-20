@@ -71,51 +71,85 @@ export const columnSweep = (columnNumber) => {
     const valuesRemaining = obtainValuesRemaining(getColumnValues(columnNumber));
     for (let i = 0; i <= 8; i++) {
         columnHTML[i].lastChild.value == '' && (
-            columnHTML[i].lastChild.value = valuesRemaining,
-            columnHTML[i].lastChild.style.fontSize = '10px'
+            columnHTML[i].lastChild.value = valuesRemaining
+            // columnHTML[i].lastChild.style.fontSize = '10px'
         )
     }
 }
 
-export const rowSweep = () => {
+const createInnerTextArea = (inputElement, content) => {
+    // console.log(content);
+    const miniDiv = document.createElement('div');
+    miniDiv.style.fontSize = '20px';
+    miniDiv.style.wordBreak = 'break-all';
+    miniDiv.value = content;
+    //father.append(miniDiv);
+    inputElement.parentNode.parentNode.replaceChild(miniDiv, inputElement);
+}
 
-
+export const rowSweep = (a) => {
+    const rowHTML = document.getElementsByClassName(`row-${a}`)[0]
+        .getElementsByTagName('input');
+    let resultsFound = [];
+    for (let i = 0; i <= 8; i++) rowHTML[i].value.length === 1 && resultsFound.push(rowHTML[i].value);
     for (let e = 0; e <= 8; e++) {
-        const rowHTML = document.getElementsByClassName(`row-${e}`)[0]
-            .getElementsByTagName('input');
-        let resultsFound = [];
-        // Revisa resultados certeros en su propia fila:
+        let thisCellValue = rowHTML[e].value;
+        thisCellValue.length > 1 && (
+            rowHTML[e].style.fontSize = '20px',
+            rowHTML[e].value = thisCellValue.split(',').filter(val => !resultsFound.includes(val))
+        )
+    }
+}
 
+export const sectionSweep = () => {
+    const inputList = document.getElementsByTagName('input');
+    const indexObtainer = (startingIndex) => {
+        return [startingIndex, startingIndex + 1, startingIndex + 2,
+            startingIndex + 9, startingIndex + 10, startingIndex + 11,
+            startingIndex + 18, startingIndex + 19, startingIndex + 20];
+    }
+    const sectionSelector = (indexSeries) => {
+        let section = [];
         for (let i = 0; i <= 8; i++) {
-            rowHTML[i].value.length === 1 && resultsFound.push(rowHTML[i].value);
+            const currentInput = inputList[indexSeries[i]];
+            section.push(currentInput);
         }
-        // .splice(indice,aCuantosReemplazo,queAgrego)
-        for (let o = 0; o <= 8; o++) {
-            // console.log(rowHTML[0].id);
-            let thisCellValue = rowHTML[o].value;
+        return section;
+    }
+    //const indexSectionZero = indexObtainer(0);
+    // const sectionZero = sectionSelector(indexObtainer(0));
+
+
+
+    // sectionZero.forEach(val => val.style.background = 'rgb(255, 172, 142)');
+
+    const sweep = (section) => {
+        let resultsFound = [];
+        for (let i = 0; i <= 8; i++) section[i].value.length === 1 && resultsFound.push(section[i].value);
+        for (let e = 0; e <= 8; e++) {
+            let thisCellValue = section[e].value;
             thisCellValue.length > 1 && (
-                rowHTML[o].value = thisCellValue.split(',').filter(val => !resultsFound.includes(val)),
-                rowHTML[o].style.background = 'rgb(255, 172, 142)'
+                section[e].style.fontSize = '20px',
+                section[e].value = thisCellValue.split(',').filter(val => !resultsFound.includes(val)),
+                section[e].style.backgroundColor = 'rgb(255, 172, 142)'
             )
         }
-        // const hiThere = thisCellValue.split(',').splice(0,0,0);
-
     }
-    /*
-    let difference = [];
-    let array1 = [1, 2, 3];
-    let array2 = [1, 2, 3, 4];
-    for (let i = 1; i <= 4; i++) {
-        difference.push(array2.filter(el => el !== array1[i]));
+
+    const sweepPerSection = () => {
+        const sectionStartingIndex = [0, 3, 6, 27, 30, 33, 54, 57, 60];
+        for (let i = 0; i < sectionStartingIndex.length; i++) {
+            sweep(sectionSelector(indexObtainer(sectionStartingIndex[i])));
+        }
     }
-*/
+    sweepPerSection();
+    // sectionZero.forEach(val => console.log(val.value));
 
+}
 
-
-
-    /*
-    for (let i = 1; i <= resultsFound.length; i++) {
-                difference.push([thisCellValue].filter(el => el == resultsFound[i]));
-    }
-    */
+export const createSampleLines = () => {
+    const series1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const series2 = [1, 2, 4, 3, 5, 6, 7, 8, 9];
+    setColumnValues(series1, 2);
+    setRowValues(series2, 3);
 }
