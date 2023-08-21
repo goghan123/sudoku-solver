@@ -44,3 +44,57 @@ const content = document.createTextNode(fillSeries());
 smallScreen.appendChild(content);
 document.body.append(smallScreen);
 */
+
+
+
+export const fillSeriesInBoard = (type, series, seriesIndex) => {
+    const vacuumsIndex = obtainVacuumsIndex(series);
+    const valuesRemaining = obtainValuesRemaining(series);
+    for (let i = 0; i <= vacuumsIndex.length - 1; i++) {
+        series.splice(vacuumsIndex[i], 1, valuesRemaining[i]);
+    }
+    type == 'column' ?
+        setColumnValues(series, seriesIndex)
+        :
+        setRowValues(series, seriesIndex);
+
+}
+
+
+export const obtainVacuumsIndex = (series) => {
+    let indexList = [];
+    for (let i = 0; i <= 8; i++) {
+        series.includes('', i) &&
+            indexList.push(series.indexOf('', i))
+    }
+    const cleanIndexList = [... new Set(indexList)];
+    return cleanIndexList;
+}
+
+/*
+const createInnerTextArea = (inputElement, content) => {
+    const miniDiv = document.createElement('div');
+    miniDiv.style.fontSize = '20px';
+    miniDiv.style.wordBreak = 'break-all';
+    miniDiv.value = content;
+    inputElement.parentNode.parentNode.replaceChild(miniDiv, inputElement);
+}
+*/
+
+const readScenario = () => {
+    let currentScenario = [];
+    for (let i = 0; i <= 8; i++) {
+        currentScenario.push(getColumnValues(i));
+    }
+    return currentScenario;
+}
+
+
+export const getRowValues = (rowNumber) => {
+    let lineValues = [];
+    for (let i = 0; i <= 8; i++) {
+        const newValue = document.getElementsByClassName(`row-${rowNumber}`)[0].getElementsByTagName('input')[i].value;
+        lineValues.push(newValue);
+    }
+    return lineValues;
+}

@@ -1,12 +1,5 @@
-export const obtainVacuumsIndex = (series) => {
-    let indexList = [];
-    for (let i = 0; i <= 8; i++) {
-        series.includes('', i) &&
-            indexList.push(series.indexOf('', i))
-    }
-    const cleanIndexList = [... new Set(indexList)];
-    return cleanIndexList;
-}
+import { indexObtainer, sectionSelector } from "./otherDomTools.js";
+import { searchUniqueCases } from "./uniqueCasesSearchers.js";
 
 export const obtainValuesRemaining = (series) => {
     const toNumbers = series.map(el => parseInt(el));
@@ -21,46 +14,10 @@ export const obtainValuesRemaining = (series) => {
     return result;
 }
 
-const setColumnValues = (newValues, colNumber) => {
-    for (let i = 0; i <= 8; i++) {
-        document.getElementsByClassName(`col-${colNumber}`)[i].lastChild.value = newValues[i];
-    }
-}
-
-const setRowValues = (newValues, rowNumber) => {
-    for (let i = 0; i <= 8; i++) {
-        document.getElementsByClassName(`row-${rowNumber}`)[0]
-            .getElementsByTagName('input')[i].value = newValues[i];
-    }
-}
-
-
-export const fillSeriesInBoard = (type, series, seriesIndex) => {
-    const vacuumsIndex = obtainVacuumsIndex(series);
-    const valuesRemaining = obtainValuesRemaining(series);
-    for (let i = 0; i <= vacuumsIndex.length - 1; i++) {
-        series.splice(vacuumsIndex[i], 1, valuesRemaining[i]);
-    }
-    type == 'column' ?
-        setColumnValues(series, seriesIndex)
-        :
-        setRowValues(series, seriesIndex);
-
-}
-
 export const getColumnValues = (colNumber) => {
     let lineValues = [];
     for (let i = 0; i <= 8; i++) {
         const newValue = document.getElementsByClassName(`col-${colNumber}`)[i].lastChild.value;
-        lineValues.push(newValue);
-    }
-    return lineValues;
-}
-
-export const getRowValues = (rowNumber) => {
-    let lineValues = [];
-    for (let i = 0; i <= 8; i++) {
-        const newValue = document.getElementsByClassName(`row-${rowNumber}`)[0].getElementsByTagName('input')[i].value;
         lineValues.push(newValue);
     }
     return lineValues;
@@ -72,19 +29,8 @@ export const columnSweep = (columnNumber) => {
     for (let i = 0; i <= 8; i++) {
         columnHTML[i].lastChild.value == '' && (
             columnHTML[i].lastChild.value = valuesRemaining
-            // columnHTML[i].lastChild.style.fontSize = '10px'
         )
     }
-}
-
-const createInnerTextArea = (inputElement, content) => {
-    // console.log(content);
-    const miniDiv = document.createElement('div');
-    miniDiv.style.fontSize = '20px';
-    miniDiv.style.wordBreak = 'break-all';
-    miniDiv.value = content;
-    //father.append(miniDiv);
-    inputElement.parentNode.parentNode.replaceChild(miniDiv, inputElement);
 }
 
 export const rowSweep = (a) => {
@@ -102,26 +48,6 @@ export const rowSweep = (a) => {
 }
 
 export const sectionSweep = () => {
-    const inputList = document.getElementsByTagName('input');
-    const indexObtainer = (startingIndex) => {
-        return [startingIndex, startingIndex + 1, startingIndex + 2,
-            startingIndex + 9, startingIndex + 10, startingIndex + 11,
-            startingIndex + 18, startingIndex + 19, startingIndex + 20];
-    }
-    const sectionSelector = (indexSeries) => {
-        let section = [];
-        for (let i = 0; i <= 8; i++) {
-            const currentInput = inputList[indexSeries[i]];
-            section.push(currentInput);
-        }
-        return section;
-    }
-    //const indexSectionZero = indexObtainer(0);
-    // const sectionZero = sectionSelector(indexObtainer(0));
-
-
-
-    // sectionZero.forEach(val => val.style.background = 'rgb(255, 172, 142)');
 
     const sweep = (section) => {
         let resultsFound = [];
@@ -130,12 +56,10 @@ export const sectionSweep = () => {
             let thisCellValue = section[e].value;
             thisCellValue.length > 1 && (
                 section[e].style.fontSize = '20px',
-                section[e].value = thisCellValue.split(',').filter(val => !resultsFound.includes(val)),
-                section[e].style.backgroundColor = 'rgb(255, 172, 142)'
+                section[e].value = thisCellValue.split(',').filter(val => !resultsFound.includes(val))
             )
         }
     }
-
     const sweepPerSection = () => {
         const sectionStartingIndex = [0, 3, 6, 27, 30, 33, 54, 57, 60];
         for (let i = 0; i < sectionStartingIndex.length; i++) {
@@ -143,13 +67,41 @@ export const sectionSweep = () => {
         }
     }
     sweepPerSection();
-    // sectionZero.forEach(val => console.log(val.value));
+}
+
+
+
+
+
+export const sweep1 = () => {
+    for (let i = 0; i < 9; i++) columnSweep(i);
+
+}
+export const sweep2 = () => {
+    for (let i = 0; i < 9; i++) rowSweep(i);
+
+}
+export const sweep3 = () => {
+    sectionSweep();
 
 }
 
-export const createSampleLines = () => {
-    const series1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const series2 = [1, 2, 4, 3, 5, 6, 7, 8, 9];
-    setColumnValues(series1, 2);
-    setRowValues(series2, 3);
+export const cleanse = () => {
+    const inputList = document.getElementsByTagName('input');
+    //inputList.forEach(el => console.log(el));
+    for (let i = 0; i < inputList.length; i++) {
+        inputList[i].value.length > 1 && (inputList[i].value = '');
+    }
+}
+
+const generalSweep = () => {
+    for (let i = 0; i < 9; i++) columnSweep(i);
+    for (let i = 0; i < 9; i++) rowSweep(i);
+    sectionSweep();
+}
+export const solve = () => {
+    generalSweep();
+    searchUniqueCases();
+    generalSweep();
+    searchUniqueCases();
 }
