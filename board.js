@@ -1,11 +1,11 @@
 import { Cell } from "./cell.js";
-import { indexObtainer, sectionSelector } from "./otherDomTools.js";
+import { sectionIndexObtainer, sectionSelector } from "./otherDomTools.js";
 import {
-    cleanse, 
+    cleanse,
     solve,
-    sweep1, sweep2, sweep3
+    sweep1, sweep2, sweep3, sectionSweep
 } from "./solver.js";
-import { searchUniqueCases } from "./uniqueCasesSearchers.js";
+import { isUniqueInRow, isUniqueInSection } from "./uniqueCasesSearchers.js";
 
 const setRowValues = (newValues, rowNumber) => {
     for (let i = 0; i <= 8; i++) {
@@ -76,7 +76,7 @@ export const createHTMLBoard = () => {
     }
     const colourfulSectionStartingIndex = [0, 6, 30, 54, 60];
     for (let i = 0; i < colourfulSectionStartingIndex.length; i++) {
-        paintIt(sectionSelector(indexObtainer(colourfulSectionStartingIndex[i])));
+        paintIt(sectionSelector(sectionIndexObtainer(colourfulSectionStartingIndex[i])));
     }
     //
 
@@ -113,14 +113,15 @@ export const messagesWindow = () => {
         // solve();
         sweep1();
     }
+
+const checker = () => {
+    document.getElementsByTagName('input').incl
+}
+
     newButton2.onclick = () => sweep2();
-    newButton3.onclick = () => sweep3();
-    newButton4.onclick = () => searchUniqueCases();
-    newButton5.onclick = () => solve();
-
-
-
-
+    newButton3.onclick = () => solve();
+    newButton4.onclick = () => sectionSweep();
+    newButton5.onclick = () => isUniqueInSection();
 
     document.body.appendChild(buttonContainer);
     buttonContainer.appendChild(newButton1);

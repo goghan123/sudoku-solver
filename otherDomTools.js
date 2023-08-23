@@ -1,4 +1,4 @@
-export const indexObtainer = (startingIndex) => {
+export const sectionIndexObtainer = (startingIndex) => {
     return [startingIndex, startingIndex + 1, startingIndex + 2,
         startingIndex + 9, startingIndex + 10, startingIndex + 11,
         startingIndex + 18, startingIndex + 19, startingIndex + 20];
