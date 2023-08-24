@@ -2,8 +2,7 @@ import { Cell } from "./cell.js";
 import { sectionIndexObtainer, sectionSelector } from "./otherDomTools.js";
 import { createSampleLines } from "./scenarioCreator.js";
 import {
-    solve,
-    sweep1, sweep2, sweep3, sectionSweep, sweep4, sweep5, sweep6
+    sweep1, sweep2, sweep3, sectionSweep, sweep4, sweep5, sweep6, sweep7, sweep8
 } from "./solver.js";
 import { isUniqueInRow, isUniqueInSection } from "./uniqueCasesSearchers.js";
 
@@ -71,6 +70,10 @@ export const messagesWindow = () => {
     newButton5.innerHTML = 'isUniqueInSection';
     const newButton6 = document.createElement('button');
     newButton6.innerHTML = 'solve';
+    const newButton7 = document.createElement('button');
+    newButton7.innerHTML = 'catchScenario';
+    const newButton8 = document.createElement('button');
+    newButton8.innerHTML = 'backInTime';
     const messagesInput = document.createElement('div');
     messagesInput.innerText = '';
     newButton1.onclick = () => {
@@ -91,6 +94,8 @@ export const messagesWindow = () => {
     newButton4.onclick = () => sweep4();
     newButton5.onclick = () => sweep5();
     newButton6.onclick = () => sweep6();
+    newButton7.onclick = () => sweep7();
+    newButton8.onclick = () => sweep8();
 
 
     document.body.appendChild(buttonContainer);
@@ -100,6 +105,8 @@ export const messagesWindow = () => {
     buttonContainer.appendChild(newButton4);
     buttonContainer.appendChild(newButton5);
     buttonContainer.appendChild(newButton6);
+    buttonContainer.appendChild(newButton7);
+    buttonContainer.appendChild(newButton8);
 
 
     buttonContainer.appendChild(messagesInput);

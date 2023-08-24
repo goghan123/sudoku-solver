@@ -35,9 +35,12 @@ export const isUniqueInColumn = () => {
 
 
             for (let e = 0; e < thisCellValues.length; e++) {
-                const specificValue = thisCellValues[e];
                 // Si es valor único en toda la columna, 
-                isUnique(getColumnValues(column), specificValue) && (inputList[cellId].value = specificValue);
+                const specificValue = thisCellValues[e];
+                //isUnique(getColumnValues(column), specificValue) && (inputList[cellId].value = specificValue);
+                (typeof inputList[cellId].value.split(',')[e] != 'undefined') && (
+                    isUnique(getColumnValues(column), specificValue) && (inputList[cellId].value = specificValue)
+                )
             }
 
             cellId = cellId + 9;
@@ -46,6 +49,7 @@ export const isUniqueInColumn = () => {
     }
 
 }
+
 export const isUniqueInRow = () => {
     const getRowValues = (rowNumber) => {
         let lineValues = [];
@@ -56,14 +60,14 @@ export const isUniqueInRow = () => {
         }
         return lineValues;
     }
-
     let cellId = 0;
     for (let row = 0; row <= 8; row++) {
         for (let a = 0; a <= 8; a++) {
             const thisCellValues = inputList[cellId].value.split(',');
             for (let e = 0; e < thisCellValues.length; e++) {
-                const specificValue = thisCellValues[e];
-                isUnique(getRowValues(row), specificValue) && (inputList[cellId].value = specificValue);
+                (typeof inputList[cellId].value.split(',')[e] != 'undefined') && (
+                    isUnique(getRowValues(row), thisCellValues[e]) && (inputList[cellId].value = thisCellValues[e])
+                )
             }
             cellId++;
         }
@@ -90,7 +94,10 @@ export const isUniqueInSection = () => {
                 //console.log(isUnique(getSectionValues(), specificValue));
                 // console.log(thisSectionHTML[cell].value);
                 // console.log(isUnique(getSectionValues(), specificValue));
-                isUnique(getSectionValues(), specificValue) && (thisSectionHTML[cell].value = specificValue);
+                // isUnique(getSectionValues(), specificValue) && (thisSectionHTML[cell].value = specificValue);
+                (typeof thisSectionHTML[cell].value.split(',')[e] != 'undefined') && (
+                    isUnique(getSectionValues(), specificValue) && (thisSectionHTML[cell].value = specificValue)
+                )
 
                 /*
                 isUnique(getSectionValues(), specificValue) == true ?

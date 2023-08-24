@@ -49,6 +49,23 @@ const setRowValues = (newValues, rowNumber) => {
             .getElementsByTagName('input')[i].value = newValues[i];
     }
 }
+
+export const catchScenario = () => {
+    const inputList = document.getElementsByTagName('input');
+    return inputList;
+}
+
+export const backInTime = (howWasIt) => {
+    let cellGlobalId = 0;
+    for (let row = 0; row <= 8; row++) {
+        const newRow = document.getElementsByClassName(`row-${row}`)[0]
+            .getElementsByTagName('input');
+        for (let cell = 0; cell <= 8; cell++) {
+            newRow[cell].value = howWasIt[cellGlobalId];
+            cellGlobalId++;
+        }
+    }
+}
 /*
    const series1 = ['', '', '', '', 6, 2, 9, '', ''];
    const series2 = [7, 2, '', 9, 1, '', '', '', ''];
@@ -88,8 +105,7 @@ export const solve = () => {
 
 */
 
-export const createSampleLines = () => {
-
+/*
     const series1 = ['', 6, '', '', '', '', 9, 1, ''];
     const series2 = [2, '', 3, '', 1, 5, 6, 8, ''];
     const series3 = ['', '', '', 6, '', 3, 2, 5, 4];
@@ -99,6 +115,19 @@ export const createSampleLines = () => {
     const series7 = ['', '', 6, '', '', 2, '', 7, 9];
     const series8 = [4, '', 7, '', 9, '', '', 6, 2];
     const series9 = [9, 1, 2, 7, '', '', 5, '', ''];
+*/
+
+export const createSampleLines = () => {
+
+    const series1 = ['', '', 5, '', '', '', 7, 8, ''];
+    const series2 = ['', '', 6, '', 5, '', '', 3, ''];
+    const series3 = ['', 9, '', '', '', 4, '', '', ''];
+    const series4 = [1, '', '', 4, '', '', '', '', ''];
+    const series5 = ['', '', 9, '', '', 6, '', '', 2];
+    const series6 = ['', '', '', 9, '', 2, '', 7, ''];
+    const series7 = [6, '', 7, 2, '', '', '', 9, 5];
+    const series8 = [2, '', '', '', '', '', 8, '', ''];
+    const series9 = ['', 1, '', 8, '', '', '', '', ''];
 
     setRowValues(series1, 0);
     setRowValues(series2, 1);

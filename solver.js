@@ -1,4 +1,5 @@
 import { sectionIndexObtainer, sectionSelector } from "./otherDomTools.js";
+import { backInTime, catchScenario } from "./scenarioCreator.js";
 import { isGameDone, scenarioReader } from "./scenarioReader.js";
 import { isUniqueInColumn, isUniqueInRow, isUniqueInSection } from "./uniqueCasesSearchers.js";
 
@@ -126,6 +127,8 @@ const generalSweep = (isFirstCall) => {
     for (let i = 0; i < 9; i++) columnSweep(i);
 }
 
+let previousScenario;
+
 export const solve = () => {
     let scenarioSwitch = 1;
     let specialSolverSwitch = 1;
@@ -158,18 +161,21 @@ export const solve = () => {
     let counter = 1;
     const sweepSequence = () => {
         generalSweep();
+        generalSweep();
         updateScenario();
         try {
             if (counter <= 30) {
                 console.log(counter);
                 if (JSON.stringify(scenario1) != JSON.stringify(scenario2)) {
                     counter++;
+                    generalSweep();
                     sweepSequence();
                     console.log('Opción 1');
                 } else if (isGameDone()) {
                     console.log('Fin del juego');
                 } else {
                     counter++;
+                    generalSweep();
                     trySpecialSolvers();
                     sweepSequence();
                     console.log('Opción 3');
@@ -185,4 +191,14 @@ export const solve = () => {
 
 export const sweep6 = () => {
     solve();
+}
+
+export const sweep7 = () => {
+    previousScenario = scenarioReader();
+}
+
+export const sweep8 = () => {
+    try {
+        backInTime(previousScenario);
+    } catch (e) { console.log(e) }
 }
