@@ -1,4 +1,5 @@
 import { sectionIndexObtainer, sectionSelector } from "./otherDomTools.js";
+import { isGameDone, scenarioReader } from "./scenarioReader.js";
 import { isUniqueInColumn, isUniqueInRow, isUniqueInSection } from "./uniqueCasesSearchers.js";
 
 export const obtainValuesRemaining = (series) => {
@@ -67,7 +68,6 @@ export const columnSweep = (columnNumber) => {
     for (let e = 0; e <= 8; e++) {
         let thisCellValue = columnHTML[e].lastChild.value;
         columnHTML[e].lastChild.value.length > 1 && (
-            // Ponele todos los valores que le faltan a la columna
             columnHTML[e].lastChild.value = thisCellValue.split(',').filter(val => !resultsFound.includes(val))
         )
     }
@@ -80,7 +80,6 @@ export const sectionSweep = () => {
         for (let e = 0; e <= 8; e++) {
             let thisCellValue = section[e].value;
             thisCellValue.length > 1 && (
-                //section[e].style.fontSize = '20px',
                 section[e].value = thisCellValue.split(',').filter(val => !resultsFound.includes(val))
             )
         }
@@ -95,26 +94,29 @@ export const sectionSweep = () => {
 }
 
 export const sweep1 = () => {
-    console.log('firstColumnSweep(i), rowSweep(i)');
-    for (let i = 0; i < 9; i++) firstColumnSweep(i);
-    for (let i = 0; i < 9; i++) rowSweep(i);
+    generalSweep('isFirstCall');
+    console.log('generalSweep(isFirstCall)');
+    console.log(scenarioReader());
 }
+
 export const sweep2 = () => {
-    console.log('sectionSweep()');
-    sectionSweep();
+    isUniqueInRow();
+    console.log('isUniqueInRow');
 }
 
 export const sweep3 = () => {
-    console.log('columnSweep(i)');
-    for (let i = 0; i < 9; i++) columnSweep(i);
+    generalSweep();
+    console.log('generalSweep');
 }
 
-export const cleanse = () => {
-    const inputList = document.getElementsByTagName('input');
-    //inputList.forEach(el => console.log(el));
-    for (let i = 0; i < inputList.length; i++) {
-        inputList[i].value.length > 1 && (inputList[i].value = '');
-    }
+export const sweep4 = () => {
+    isUniqueInColumn();
+    console.log('isUniqueInColumn');
+}
+
+export const sweep5 = () => {
+    isUniqueInSection();
+    console.log('isUniqueInSection');
 }
 
 const generalSweep = (isFirstCall) => {
@@ -125,23 +127,62 @@ const generalSweep = (isFirstCall) => {
 }
 
 export const solve = () => {
+    let scenarioSwitch = 1;
+    let specialSolverSwitch = 1;
+    let scenario1 = 'scenario1';
+    let scenario2 = 'scenario2';
+    const updateScenario = () => {
+        scenarioSwitch === 1 ? (
+            scenario1 = scenarioReader(),
+            scenarioSwitch = 2
+        ) : (
+            scenario2 = scenarioReader(),
+            scenarioSwitch = 1
+        )
+    }
+    const trySpecialSolvers = () => {
+        if (specialSolverSwitch === 1) {
+            isUniqueInRow();
+            specialSolverSwitch = 2;
+            console.log('isUniqueInRow');
+        } else if (specialSolverSwitch === 2) {
+            isUniqueInColumn();
+            specialSolverSwitch = 3;
+            console.log('isUniqueInCol');
+        } else {
+            isUniqueInSection();
+            specialSolverSwitch = 1;
+            console.log('isUniqueInSection');
+        }
+    }
+    let counter = 1;
+    const sweepSequence = () => {
+        generalSweep();
+        updateScenario();
+        try {
+            if (counter <= 30) {
+                console.log(counter);
+                if (JSON.stringify(scenario1) != JSON.stringify(scenario2)) {
+                    counter++;
+                    sweepSequence();
+                    console.log('Opción 1');
+                } else if (isGameDone()) {
+                    console.log('Fin del juego');
+                } else {
+                    counter++;
+                    trySpecialSolvers();
+                    sweepSequence();
+                    console.log('Opción 3');
+                }
+            } else {
+                console.log('No se pudo resolver');
+            }
+        } catch (e) { console.log(e) }
+    }
     generalSweep('isFirstCall');
-    isUniqueInRow();
-    generalSweep();
-    isUniqueInColumn();
-    generalSweep();
-    isUniqueInSection();
-    generalSweep();
-    generalSweep();
-    generalSweep();
+    sweepSequence();
+}
 
-
-    //isUniqueInRow();
-    //generalSweep();
-
-
-    //isUniqueInColumn();
-    //for (let i = 0; i < 9; i++) rowSweep(i);
-
-
+export const sweep6 = () => {
+    solve();
 }

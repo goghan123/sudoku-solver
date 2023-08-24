@@ -1,54 +1,22 @@
 import { Cell } from "./cell.js";
 import { sectionIndexObtainer, sectionSelector } from "./otherDomTools.js";
+import { createSampleLines } from "./scenarioCreator.js";
 import {
-    cleanse,
     solve,
-    sweep1, sweep2, sweep3, sectionSweep
+    sweep1, sweep2, sweep3, sectionSweep, sweep4, sweep5, sweep6
 } from "./solver.js";
 import { isUniqueInRow, isUniqueInSection } from "./uniqueCasesSearchers.js";
 
-const setRowValues = (newValues, rowNumber) => {
-    for (let i = 0; i <= 8; i++) {
-        document.getElementsByClassName(`row-${rowNumber}`)[0]
-            .getElementsByTagName('input')[i].value = newValues[i];
-    }
-}
-const createSampleLines = () => {
-    /*
-    const series1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const series2 = [1, 2, 4, 3, 5, 6, 7, 8, 9];
-    setColumnValues(series1, 2);
-    setRowValues(series2, 3);
-    */
-    const series1 = ['', '', '', '', 6, 2, 9, '', ''];
-    const series2 = [7, 2, '', 9, 1, '', '', '', ''];
-    const series3 = ['', '', 6, '', '', '', '', '', 8];
-    const series4 = ['', '', '', 1, '', '', 2, '', ''];
-    const series5 = [4, '', 2, '', '', '', 7, '', 3];
-    const series6 = [8, 6, '', '', '', 3, '', '', 9];
-    const series7 = [2, '', 9, 8, 3, 1, 5, 6, ''];
-    const series8 = [5, 8, 7, '', 2, 4, 3, 9, ''];
-    const series9 = ['', '', '', 7, '', '', 8, 4, ''];
-    setRowValues(series1, 0);
-    setRowValues(series2, 1);
-    setRowValues(series3, 2);
-    setRowValues(series4, 3);
-    setRowValues(series5, 4);
-    setRowValues(series6, 5);
-    setRowValues(series7, 6);
-    setRowValues(series8, 7);
-    setRowValues(series9, 8);
-}
 
-let cellId = 0;
-const addObject = (i, e, cellContainer) => {
-    const newCell = new Cell(e, i);
-    newCell.createCell(cellContainer, cellId);
-    cellId++;
-}
 
 export const createHTMLBoard = () => {
-
+    let cellId = 0;
+    const addObject = (i, e, cellContainer) => {
+        const newCell = new Cell(e, i);
+        newCell.createCell(cellContainer, cellId);
+        cellId++;
+    }
+    
     const divContainer = document.createElement('div');
     document.body.append(divContainer);
 
@@ -92,15 +60,17 @@ export const messagesWindow = () => {
     buttonContainer.setAttribute('id', 'x-container');
     buttonContainer.style.width = '100vw';
     const newButton1 = document.createElement('button');
-    newButton1.innerHTML = 'Tomahawk';
+    newButton1.innerHTML = 'generalSweep(1)';
     const newButton2 = document.createElement('button');
-    newButton2.innerHTML = 'Airbus A380';
+    newButton2.innerHTML = 'isUniqueInRow';
     const newButton3 = document.createElement('button');
-    newButton3.innerHTML = 'Boeing 747';
+    newButton3.innerHTML = 'generalSweep';
     const newButton4 = document.createElement('button');
-    newButton4.innerHTML = 'Antonov Mriya 225';
+    newButton4.innerHTML = 'isUniqueInColumn';
     const newButton5 = document.createElement('button');
-    newButton5.innerHTML = 'General';
+    newButton5.innerHTML = 'isUniqueInSection';
+    const newButton6 = document.createElement('button');
+    newButton6.innerHTML = 'solve';
     const messagesInput = document.createElement('div');
     messagesInput.innerText = '';
     newButton1.onclick = () => {
@@ -114,14 +84,14 @@ export const messagesWindow = () => {
         sweep1();
     }
 
-const checker = () => {
-    document.getElementsByTagName('input').incl
-}
+
 
     newButton2.onclick = () => sweep2();
-    newButton3.onclick = () => solve();
-    newButton4.onclick = () => sectionSweep();
-    newButton5.onclick = () => isUniqueInSection();
+    newButton3.onclick = () => sweep3();
+    newButton4.onclick = () => sweep4();
+    newButton5.onclick = () => sweep5();
+    newButton6.onclick = () => sweep6();
+
 
     document.body.appendChild(buttonContainer);
     buttonContainer.appendChild(newButton1);
@@ -129,6 +99,8 @@ const checker = () => {
     buttonContainer.appendChild(newButton3);
     buttonContainer.appendChild(newButton4);
     buttonContainer.appendChild(newButton5);
+    buttonContainer.appendChild(newButton6);
+
 
     buttonContainer.appendChild(messagesInput);
 }
