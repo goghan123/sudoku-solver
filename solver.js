@@ -2,6 +2,7 @@ import { sectionIndexObtainer, sectionSelector } from "./otherDomTools.js";
 import { backInTime, catchScenario } from "./scenarioCreator.js";
 import { isGameDone, scenarioReader } from "./scenarioReader.js";
 import { isUniqueInColumn, isUniqueInRow, isUniqueInSection } from "./uniqueCasesSearchers.js";
+import { getLongestCell } from "./randomPicker.js";
 
 export const obtainValuesRemaining = (series) => {
     const toNumbers = series.map(el => parseInt(el));
@@ -130,11 +131,18 @@ const generalSweep = (isFirstCall) => {
 let previousScenario;
 
 export const solve = () => {
+    const allInputsList = document.getElementsByTagName('input');
     let scenarioSwitch = 1;
     let specialSolverSwitch = 1;
     let scenario1 = 'scenario1';
     let scenario2 = 'scenario2';
-    const updateScenario = () => {
+    let scenarioToComeTo;
+    let longestCell;
+    let longestCellID;
+    let longCellValueIndex;
+    let counter = 0;
+    let thirdStageTryNumber = 0;
+    const updateScenarioReading = () => {
         scenarioSwitch === 1 ? (
             scenario1 = scenarioReader(),
             scenarioSwitch = 2
@@ -158,28 +166,66 @@ export const solve = () => {
             console.log('isUniqueInSection');
         }
     }
-    let counter = 1;
     const sweepSequence = () => {
+        //        console.log('sweepSequence');
         generalSweep();
         generalSweep();
-        updateScenario();
+        updateScenarioReading();
         try {
-            if (counter <= 30) {
-                console.log(counter);
+            if (counter <= 20) {
+                counter++;
+                //console.log('First stage');
+                generalSweep();
                 if (JSON.stringify(scenario1) != JSON.stringify(scenario2)) {
-                    counter++;
-                    generalSweep();
                     sweepSequence();
-                    console.log('Opción 1');
                 } else if (isGameDone()) {
                     console.log('Fin del juego');
                 } else {
-                    counter++;
-                    generalSweep();
                     trySpecialSolvers();
                     sweepSequence();
-                    console.log('Opción 3');
                 }
+            } else if (counter > 20 && counter <= 30) {
+                counter++;
+                typeof scenarioToComeTo == 'undefined' &&
+                    (scenarioToComeTo = scenarioReader());
+                typeof longestCell == 'undefined' && (
+                    longestCell = getLongestCell()[0][2],
+                    longestCellID = getLongestCell()[0][1]);
+                if (typeof longCellValueIndex != 'undefined') {
+                    console.log('Trying with new scenario');
+                    //console.log(longCellValueIndex);
+                    backInTime(scenarioToComeTo);
+                    if (longCellValueIndex - 1 >= 0) {
+                        console.log('a1');
+                        longCellValueIndex = longCellValueIndex - 1;
+                        console.log(`Subvalor número ${longCellValueIndex}`);
+                    } else {
+                        console.log('a2');
+                        if (thirdStageTryNumber != allInputsList.length - 1) {
+                            console.log('a3');
+                            thirdStageTryNumber++;
+                            longestCell = getLongestCell()[thirdStageTryNumber][2];
+                            longestCellID = getLongestCell()[thirdStageTryNumber][1];
+                            longCellValueIndex = longestCell.length - 1;
+                            console.log(`Pasando a celda número ${thirdStageTryNumber}`);
+                        } else {
+                            console.log('a4');
+                            thirdStageTryNumber = false;
+                            console.log('No se pudo resolver');
+                        }
+                    }
+                } else {
+                    console.log('Creating first hypothetical scenario');
+                    longCellValueIndex = longestCell.length - 1;
+                }
+                thirdStageTryNumber === false || (
+                    allInputsList[longestCellID].value = longestCell[longCellValueIndex],
+                    counter = 10,
+                    sweepSequence()
+                    //console.log(longestCellID)
+                )
+            } else if (isGameDone()) {
+                console.log('Fin del juego');
             } else {
                 console.log('No se pudo resolver');
             }
@@ -187,7 +233,43 @@ export const solve = () => {
     }
     generalSweep('isFirstCall');
     sweepSequence();
+
 }
+
+// backInTime(scenarioToComeTo);
+
+//console.log(longestCellArray);
+// console.log(longestCellID);
+//randomPicker();
+//console.log(counter);
+
+/*
+Sacar foto
+Seleccionar un valor de la celda más grande
+Hacer que ese valor sea la posta
+Barrer a partir de eso
+Si el juego termina, termina
+    Si el juego no termina, 
+        Volver al pasado
+        Probar con el valor 2 de la celda más grande
+            Si el juego no termina, 
+                Volver al pasado
+                Probar con el valor 3 de la celda más grande
+ 
+ 
+ 
+//console.log(counter);
+//sweepSequence();
+ 
+    longCellValueIndex - 1;
+backInTime(scenarioToComeTo);
+// sweepSequence();
+ 
+ 
+*/
+
+
+
 
 export const sweep6 = () => {
     solve();
@@ -195,6 +277,7 @@ export const sweep6 = () => {
 
 export const sweep7 = () => {
     previousScenario = scenarioReader();
+    sessionStorage.setItem('previousScenario', previousScenario);
 }
 
 export const sweep8 = () => {

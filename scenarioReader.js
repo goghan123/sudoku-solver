@@ -1,8 +1,8 @@
 export const scenarioReader = () => {
-    const previousScenarioHTML = document.getElementsByTagName('input');
+    const scenarioHTML = document.getElementsByTagName('input');
     let scenarioValues = [];
-    for (let i = 0; i < previousScenarioHTML.length; i++) {
-        scenarioValues.push(previousScenarioHTML[i].value);
+    for (let i = 0; i < scenarioHTML.length; i++) {
+        scenarioValues.push(scenarioHTML[i].value);
     }
     return scenarioValues;
 }
