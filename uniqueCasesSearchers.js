@@ -1,5 +1,3 @@
-//import { getColumnValues } from "./solver";
-
 import { sectionIndexObtainer, sectionSelector } from "./otherDomTools.js";
 
 const isUnique = (series, value) => {
@@ -11,7 +9,6 @@ const isUnique = (series, value) => {
 const inputList = document.getElementsByTagName('input');
 
 export const isUniqueInColumn = () => {
-    //const columnHTML = document.getElementsByClassName(`col-${columnNumber}`);
     const getColumnValues = (colNumber) => {
         let lineValues = [];
         for (let i = 0; i <= 8; i++) {
@@ -21,33 +18,19 @@ export const isUniqueInColumn = () => {
         }
         return lineValues;
     }
-    // Columna por columna
     for (let column = 0; column <= 8; column++) {
         let cellId = column;
-        // Navegá por todas las celdas
         for (let a = 0; a <= 8; a++) {
-            // Pasar los valores de string a array
             const thisCellValues = inputList[cellId].value.split(',');
-            // Ir valor por valor
-            //inputList[cellId].fontStize = inputList[cellId].id;
-
-            //inputList[cellId].value = inputList[cellId].id;
-
-
             for (let e = 0; e < thisCellValues.length; e++) {
-                // Si es valor único en toda la columna, 
                 const specificValue = thisCellValues[e];
-                //isUnique(getColumnValues(column), specificValue) && (inputList[cellId].value = specificValue);
                 (typeof inputList[cellId].value.split(',')[e] != 'undefined') && (
                     isUnique(getColumnValues(column), specificValue) && (inputList[cellId].value = specificValue)
                 )
             }
-
             cellId = cellId + 9;
-
         }
     }
-
 }
 
 export const isUniqueInRow = () => {
@@ -90,24 +73,10 @@ export const isUniqueInSection = () => {
             const thisCellValues = thisSectionHTML[cell].value.split(',');
             for (let e = 0; e < thisCellValues.length; e++) {
                 const specificValue = thisCellValues[e];
-                // console.log(specificValue);
-                //console.log(isUnique(getSectionValues(), specificValue));
-                // console.log(thisSectionHTML[cell].value);
-                // console.log(isUnique(getSectionValues(), specificValue));
-                // isUnique(getSectionValues(), specificValue) && (thisSectionHTML[cell].value = specificValue);
                 (typeof thisSectionHTML[cell].value.split(',')[e] != 'undefined') && (
                     isUnique(getSectionValues(), specificValue) && (thisSectionHTML[cell].value = specificValue)
                 )
-
-                /*
-                isUnique(getSectionValues(), specificValue) == true ?
-                    thisSectionHTML[cell].value = specificValue :
-                    console.log('Era falso papá.')
-                    */
-                // .style.backgroundColor = ;
-                // thisSectionHTML.forEach(el => el.style.backgroundColor = 'blue');
             }
         }
     }
 }
-

@@ -1,6 +1,6 @@
 import {
-    createHTMLBoard, messagesWindow
+    createHTMLBoard, buttons
 } from "./board.js";
 
-messagesWindow();
+buttons();
 createHTMLBoard();
