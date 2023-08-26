@@ -12,10 +12,18 @@ export class Cell {
         newInput.setAttribute('id', `input-${cellId}`);
         newInput.min = '1';
         newInput.max = '9';
-        newInput.style.width = '70px';
-        newInput.style.height = '70px';
+        newInput.style.width = '50px';
+        newInput.style.height = '50px';
         newInput.style.textAlign = 'center';
-        newInput.style.fontSize = '40px';
+        newInput.style.fontSize = '30px';
+        newInput.style.fontWeight = 'bold';
+        //newInput.style.fontFamily = 'w3-cursive';
+        newInput.style.color = 'white';
+        newInput.style.borderRadius = "10px";
+        newInput.style.background = '#11282e';
+        newInput.style.borderWidth = "0";
+
+
 
 
 

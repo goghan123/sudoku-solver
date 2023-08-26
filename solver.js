@@ -1,5 +1,5 @@
 import { sectionIndexObtainer, sectionSelector } from "./otherDomTools.js";
-import { backInTime, catchScenario } from "./scenarioCreator.js";
+import { backInTime } from "./scenarioCreator.js";
 import { isGameDone, scenarioReader } from "./scenarioReader.js";
 import { isUniqueInColumn, isUniqueInRow, isUniqueInSection } from "./uniqueCasesSearchers.js";
 import { getLongestCell } from "./randomPicker.js";
@@ -36,7 +36,8 @@ export const firstColumnSweep = () => {
             // A cada input que no tenga resultado final
             columnHTML[i].lastChild.value == '' && (
                 // Ponele todos los valores que le faltan a la columna
-                columnHTML[i].lastChild.style.fontSize = '20px',
+                //columnHTML[i].lastChild.style.fontSize = '20px',
+                //columnHTML[i].lastChild.style.color = '#636368',
                 columnHTML[i].lastChild.value = valuesRemaining
             )
         }
@@ -132,6 +133,10 @@ let previousScenario;
 
 export const solve = () => {
     const allInputsList = document.getElementsByTagName('input');
+    for (let i = 0; i <= 80; i++) {
+        allInputsList[i].value.length === 1 &&
+            (allInputsList[i].style.color = 'black')
+    }
     let scenarioSwitch = 1;
     let specialSolverSwitch = 1;
     let scenario1 = 'scenario1';
