@@ -170,3 +170,7 @@ export const createSampleLines = () => {
         setRowValues(series9, 8);
         */
 }
+
+export const clear = () => {
+    
+}

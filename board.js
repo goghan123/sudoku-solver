@@ -9,7 +9,7 @@ const createCell = (cellContainer, cellId) => {
     newInput.min = '1';
     newInput.max = '9';
     newInput.style.width = '50px';
-    newInput.style.height = '50px';
+    newInput.style.height = '50px';s
     newInput.style.textAlign = 'center';
     newInput.style.fontSize = '30px';
     newInput.style.fontWeight = 'bold';
@@ -21,16 +21,17 @@ const createCell = (cellContainer, cellId) => {
 }
 
 export const createHTMLBoard = () => {
-    document.display = 'flex';
-    document.justifyContent = 'end';
+    document.body.style.display = 'flex';
+    document.body.style.flexDirection = 'column';
+    document.body.style.justifyContent = 'center';
     document.body.style.backgroundColor = 'black';
-    document.body.style.height = '100%';
+    document.body.style.height = '100vh';
     document.body.style.width = '100vw';
     const board = document.createElement('table');
     board.setAttribute('id', 'board');
     board.style.display = 'flex';
     board.style.justifyContent = 'center';
-    board.style.height = '80%';
+    board.style.alignSelf = 'center';
     board.style.width = '100%';
     board.style.alignItems = 'end';
 
@@ -70,7 +71,6 @@ export const buttons = () => {
     buttonContainer.setAttribute('id', 'buttons-container');
     buttonContainer.style.display = 'flex';
     buttonContainer.style.justifyContent = 'center';
-    buttonContainer.style.height = '10%';
     buttonContainer.style.alignItems = 'center';
     buttonContainer.style.width = '100vw';
 
