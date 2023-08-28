@@ -9,7 +9,7 @@ const createCell = (cellContainer, cellId) => {
     newInput.min = '1';
     newInput.max = '9';
     newInput.style.width = '50px';
-    newInput.style.height = '50px';s
+    newInput.style.height = '50px';
     newInput.style.textAlign = 'center';
     newInput.style.fontSize = '30px';
     newInput.style.fontWeight = 'bold';
