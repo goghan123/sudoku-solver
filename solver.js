@@ -45,15 +45,12 @@ export const solve = () => {
         if (specialSolverSwitch === 1) {
             isUniqueInRow();
             specialSolverSwitch = 2;
-            console.log('isUniqueInRow');
         } else if (specialSolverSwitch === 2) {
             isUniqueInColumn();
             specialSolverSwitch = 3;
-            console.log('isUniqueInCol');
         } else {
             isUniqueInSection();
             specialSolverSwitch = 1;
-            console.log('isUniqueInSection');
         }
     }
     const sweepSequence = () => {
@@ -67,7 +64,7 @@ export const solve = () => {
                 if (JSON.stringify(scenario1) != JSON.stringify(scenario2)) {
                     sweepSequence();
                 } else if (isGameDone()) {
-                    console.log('Fin del juego');
+                    console.log('Finish');
                 } else {
                     trySpecialSolvers();
                     sweepSequence();
@@ -85,7 +82,7 @@ export const solve = () => {
                     if (longCellValueIndex - 1 >= 0) {
                         console.log('a1');
                         longCellValueIndex = longCellValueIndex - 1;
-                        console.log(`Subvalor número ${longCellValueIndex}`);
+                        console.log(`Sub-value number ${longCellValueIndex}`);
                     } else {
                         console.log('a2');
                         if (thirdStageTryNumber != allInputsList.length - 1) {
@@ -94,11 +91,11 @@ export const solve = () => {
                             longestCell = getLongestCell()[thirdStageTryNumber][2];
                             longestCellID = getLongestCell()[thirdStageTryNumber][1];
                             longCellValueIndex = longestCell.length - 1;
-                            console.log(`Pasando a celda número ${thirdStageTryNumber}`);
+                            console.log(`Passing to cell number ${thirdStageTryNumber}`);
                         } else {
                             console.log('a4');
                             thirdStageTryNumber = false;
-                            console.log('No se pudo resolver');
+                            console.log('Scenario could not be solved');
                         }
                     }
                 } else {
@@ -111,9 +108,9 @@ export const solve = () => {
                     sweepSequence()
                 )
             } else if (isGameDone()) {
-                console.log('Fin del juego');
+                console.log('Finish');
             } else {
-                console.log('No se pudo resolver');
+                console.log('Scenario could not be solved');
             }
         } catch (e) { console.log(e) }
     }
