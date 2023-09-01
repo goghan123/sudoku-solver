@@ -1,24 +1,6 @@
 import { sectionIndexObtainer, sectionSelector } from "./otherDomTools.js";
 import { solve } from "./solver.js";
 
-const createCell = (cellContainer, cellId) => {
-    const newInput = document.createElement('input');
-    newInput.setAttribute('type', 'text');
-    newInput.setAttribute('id', `input-${cellId}`);
-    newInput.style.width = '8vw';
-    newInput.style.maxWidth= '50px';
-    newInput.style.height = '8vw';
-    newInput.style.maxHeight = '50px';
-    newInput.style.textAlign = 'center';
-    newInput.style.fontSize = '4vw';
-    newInput.style.fontWeight = 'bold';
-    newInput.style.color = 'white';
-    newInput.style.borderRadius = "10px";
-    newInput.style.background = '#11282e';
-    newInput.style.borderWidth = "0";
-    cellContainer.appendChild(newInput);
-}
-
 const createSampleLines = () => {
     const newSeriesSeries = [, , 8, , 5, , , , , , 2, , 1, , 8, , 9, , 4, , , , , , 6, , , , , , , , 7, , , , , 8, , 3, , 9, , 1, , , , 2, , , , , , 8, , , , , 2, , , 5, , , , 6, 5, , 3, 9, , , , 3, , , 7, , , ,];
     const setIt = (what) => {
@@ -31,6 +13,7 @@ const createSampleLines = () => {
 }
 
 export const generalHTML = () => {
+    
     document.body.style.display = 'flex';
     document.body.style.flexDirection = 'column';
     document.body.style.justifyContent = 'center';
@@ -43,6 +26,29 @@ export const generalHTML = () => {
     board.style.justifyContent = 'center';
     board.style.alignSelf = 'center';
     board.style.alignItems = 'end';
+    // 
+
+    const createCell = (cellContainer, cellId) => {
+        const newInput = document.createElement('input');
+        newInput.setAttribute('type', 'text');
+        newInput.setAttribute('id', `input-${cellId}`);
+        newInput.style.width = '8vw';
+        newInput.style.maxWidth = '50px';
+        newInput.style.minWidth = '30px';
+
+        newInput.style.height = '8vw';
+        newInput.style.maxHeight = '50px';
+        newInput.style.minHeight = '30px';
+
+        newInput.style.fontSize = '3vw';
+        newInput.style.textAlign = 'center';
+        newInput.style.fontWeight = 'bold';
+        newInput.style.color = 'white';
+        newInput.style.borderRadius = "10px";
+        newInput.style.background = '#11282e';
+        newInput.style.borderWidth = "0";
+        cellContainer.appendChild(newInput);
+    }
 
     let cellId = 0;
     for (let i = 0; i < 9; i++) {
@@ -87,13 +93,13 @@ export const buttons = () => {
     mainButton.setAttribute('id', 'main-button');
     mainButton.innerHTML = 'Solve it';
     mainButton.style.color = 'white';
-    mainButton.style.fontSize = '5vw';
+    mainButton.style.fontSize = '3vw';
     mainButton.style.background = '#11282e';
     mainButton.style.height = '60px';
     mainButton.style.paddingRight = '20px';
     mainButton.style.paddingLeft = '20px';
     mainButton.style.border = '0';
-    mainButton.style.borderRadius = '2vw';
+    mainButton.style.borderRadius = '1vw';
     mainButton.style.marginBottom = '10px';
     mainButton.onclick = () => solve();
 
