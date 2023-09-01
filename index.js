@@ -1,6 +1,6 @@
 import {
-    createHTMLBoard, buttons
+    generalHTML, buttons
 } from "./board.js";
 
 buttons();
-createHTMLBoard();
+generalHTML();
