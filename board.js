@@ -6,9 +6,11 @@ const createCell = (cellContainer, cellId) => {
     newInput.setAttribute('type', 'text');
     newInput.setAttribute('id', `input-${cellId}`);
     newInput.style.width = '8vw';
+    newInput.style.maxWidth= '50px';
     newInput.style.height = '8vw';
+    newInput.style.maxHeight = '50px';
     newInput.style.textAlign = 'center';
-    newInput.style.fontSize = '5vw';
+    newInput.style.fontSize = '4vw';
     newInput.style.fontWeight = 'bold';
     newInput.style.color = 'white';
     newInput.style.borderRadius = "10px";
@@ -33,7 +35,7 @@ export const generalHTML = () => {
     document.body.style.flexDirection = 'column';
     document.body.style.justifyContent = 'center';
     document.body.style.backgroundColor = 'black';
-    document.body.style.height = '100vh';
+    document.body.style.height = '100%';
     document.body.style.width = '98%';
     const board = document.createElement('table');
     board.setAttribute('id', 'board');
@@ -91,7 +93,7 @@ export const buttons = () => {
     mainButton.style.paddingRight = '20px';
     mainButton.style.paddingLeft = '20px';
     mainButton.style.border = '0';
-    mainButton.style.borderRadius = '3vw';
+    mainButton.style.borderRadius = '2vw';
     mainButton.style.marginBottom = '10px';
     mainButton.onclick = () => solve();
 
