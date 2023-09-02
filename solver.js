@@ -11,7 +11,7 @@ const generalSweep = (isFirstCall) => {
     for (let i = 0; i < 9; i++) columnSweep(i);
 }
 const allInputsList = document.getElementsByTagName('input');
-const checkIfAllNumbers = () => {
+const checkIfOnlyNumbers = () => {
     let allIsGood = [];
     for (let i = 0; i <= 80; i++) {
         ((allInputsList[i].value >= 1 && allInputsList[i].value <= 9) ||
@@ -27,9 +27,10 @@ let initialNumbers;
 export const solve = () => {
     let phase = 0;
     if (phase === 0) {
-        if (!checkIfAllNumbers()) {
+        if (!checkIfOnlyNumbers()) {
             updateMessage('Invalid values');
         } else {
+            document.getElementById('clear-button').remove();
             if (typeof initialNumbers == 'undefined') {
                 initialNumbers = true;
                 for (let i = 0; i <= 80; i++) {
@@ -139,4 +140,11 @@ export const solve = () => {
             sweepSequence();
         }
     }
+}
+
+export const clear = () => {
+    for (let i = 0; i <= 80; i++) {
+        allInputsList[i].value = '';
+    }
+    initialNumbers;
 }
